@@ -1,5 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+interface Todo {
+  id: string;
+  text: string;
+  completed: boolean;
+}
+
 const loadFromLocalStorage = () => {
   const saved = localStorage.getItem('todos');
   return saved ? JSON.parse(saved) : [];
@@ -19,18 +25,18 @@ const todoSlice = createSlice({
     },
     editTodo: (state, action) => {
       const { id, text } = action.payload;
-      const todo = state.todos.find(t => t.id === id);
+      const todo = state.todos.find((t: Todo) => t.id === id);
       if (todo) {
         todo.text = text;
         localStorage.setItem('todos', JSON.stringify(state.todos));
       }
     },
     deleteTodo: (state, action) => {
-      state.todos = state.todos.filter(t => t.id !== action.payload);
+      state.todos = state.todos.filter((t: Todo) => t.id !== action.payload);
       localStorage.setItem('todos', JSON.stringify(state.todos));
     },
     toggleTodo: (state, action) => {
-      const todo = state.todos.find(t => t.id === action.payload);
+      const todo = state.todos.find((t: Todo) => t.id === action.payload);
       if (todo) {
         todo.completed = !todo.completed;
         localStorage.setItem('todos', JSON.stringify(state.todos));

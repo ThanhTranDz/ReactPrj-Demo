@@ -16,7 +16,7 @@ const Lesson3 = () => {
   // Update total records when component mounts
   useEffect(() => {
     paginationFunctions.updateTotalRecords(users.length);
-  }, []);
+  }, [paginationFunctions]);
 
   // Sắp xếp dữ liệu theo cột
   const sortedUsers = [...users].sort((a, b) => {
@@ -148,8 +148,8 @@ const Lesson3 = () => {
   ];
 
   const handleTableChange: TableProps<User>["onChange"] = (
-    pagination,
-    filters,
+    _pagination,
+    _filters,
     sorter
   ) => {
     if (sorter && "field" in sorter && sorter.field) {
