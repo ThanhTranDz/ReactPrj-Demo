@@ -42,7 +42,7 @@ const Lesson3 = () => {
       dataIndex: "id",
       key: "id",
       sorter: true,
-      render: (text, record) => <span>{text}</span>
+      render: (text) => <span>{text}</span>
     },
     {
       title: "First Name",
