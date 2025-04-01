@@ -1,4 +1,3 @@
-
 const AllLesson = () => {
   return (
     <div className="container grid grid-cols-3">
@@ -54,4 +53,4 @@ const AllLesson = () => {
   );
 };
 
-export default AllLesson 
+export default AllLesson;

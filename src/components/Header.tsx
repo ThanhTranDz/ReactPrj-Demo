@@ -1,4 +1,3 @@
-import React from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/authSlice";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +23,7 @@ export const Header = () => {
         </a>
       </div>
       <b>Bài thực hành react ( ts required )</b>
-      <button 
+      <button
         onClick={handleLogout}
         className="bg-blue-400 text-white text-sm px-1 rounded py-1 h-fit hover:bg-blue-500 transition-colors cursor-pointer"
       >

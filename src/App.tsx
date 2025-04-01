@@ -4,8 +4,7 @@ import { DashBoardLayout } from "./layouts/DashBoardLayout";
 import { Login } from "./pages/auth/Login";
 import { Register } from "./pages/auth/Register";
 import { ForgotPassword } from "./pages/auth/ForgotPassword";
-// import { ExerciseList } from "./pages/dashboard/ExerciseList";
-// import { ExerciseDetail } from "./pages/dashboard/ExerciseDetail";
+
 import { AuthLayout } from "./layouts/AuthLayout";
 import { LessonContent } from "./components/LessonContent";
 import { useSelector } from "react-redux";
@@ -18,21 +17,41 @@ function App() {
   return (
     <Routes>
       {/* Redirect root path based on auth state */}
-      <Route path="/" element={
-        isAuthenticated ? <Navigate to="/welcome" replace /> : <Navigate to="/sign-in" replace />
-      } />
+      <Route
+        path="/"
+        element={
+          isAuthenticated ? (
+            <Navigate to="/welcome" replace />
+          ) : (
+            <Navigate to="/sign-in" replace />
+          )
+        }
+      />
 
       {/* Màn xác thực - chỉ cho phép khi chưa đăng nhập */}
-      <Route element={<AuthLayout/>}>
-        <Route path="/sign-in" element={
-          isAuthenticated ? <Navigate to="/welcome" replace /> : <Login />
-        } />
-        <Route path="/sign-up" element={
-          isAuthenticated ? <Navigate to="/welcome" replace /> : <Register />
-        } />
-        <Route path="/forgot" element={
-          isAuthenticated ? <Navigate to="/welcome" replace /> : <ForgotPassword />
-        } />
+      <Route element={<AuthLayout />}>
+        <Route
+          path="/sign-in"
+          element={
+            isAuthenticated ? <Navigate to="/welcome" replace /> : <Login />
+          }
+        />
+        <Route
+          path="/sign-up"
+          element={
+            isAuthenticated ? <Navigate to="/welcome" replace /> : <Register />
+          }
+        />
+        <Route
+          path="/forgot"
+          element={
+            isAuthenticated ? (
+              <Navigate to="/welcome" replace />
+            ) : (
+              <ForgotPassword />
+            )
+          }
+        />
       </Route>
 
       {/* Các route được bảo vệ - yêu cầu đăng nhập */}

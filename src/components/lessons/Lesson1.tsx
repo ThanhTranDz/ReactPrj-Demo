@@ -1,4 +1,3 @@
-
 const Lesson1 = () => {
   return (
     <div>

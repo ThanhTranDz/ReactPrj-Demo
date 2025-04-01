@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   addTodo,
@@ -19,8 +19,8 @@ import {
   SegmentedControl,
 } from "@mantine/core";
 import { IconTrash, IconEdit, IconGripVertical } from "@tabler/icons-react";
-import { DndProvider, useDrag, useDrop } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider, useDrag, useDrop } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import { RootState } from "../../redux/store";
 
 interface Todo {
@@ -35,26 +35,30 @@ interface DragItem {
   type: string;
 }
 
-const TodoItem = ({ todo, index, moveItem }: { 
-  todo: Todo; 
+const TodoItem = ({
+  todo,
+  index,
+  moveItem,
+}: {
+  todo: Todo;
   index: number;
   moveItem: (dragIndex: number, hoverIndex: number) => void;
 }) => {
   const [editId, setEditId] = useState<number | null>(null);
-  const [editText, setEditText] = useState('');
+  const [editText, setEditText] = useState("");
   const dispatch = useDispatch();
   const ref = useRef<HTMLDivElement>(null);
 
   const [{ isDragging }, drag] = useDrag({
-    type: 'TODO_ITEM',
-    item: { type: 'TODO_ITEM', id: todo.id, index },
+    type: "TODO_ITEM",
+    item: { type: "TODO_ITEM", id: todo.id, index },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });
 
   const [, drop] = useDrop({
-    accept: 'TODO_ITEM',
+    accept: "TODO_ITEM",
     hover(item: DragItem) {
       if (!ref.current) {
         return;
@@ -80,7 +84,7 @@ const TodoItem = ({ todo, index, moveItem }: {
     if (!editText.trim()) return;
     dispatch(editTodo({ id, text: editText }));
     setEditId(null);
-    setEditText('');
+    setEditText("");
   };
 
   drag(drop(ref));
@@ -90,9 +94,9 @@ const TodoItem = ({ todo, index, moveItem }: {
       ref={ref}
       p="sm"
       withBorder
-      style={{ 
+      style={{
         opacity: isDragging ? 0.5 : 1,
-        cursor: 'move'
+        cursor: "move",
       }}
     >
       <Group align="center">
@@ -106,29 +110,29 @@ const TodoItem = ({ todo, index, moveItem }: {
             value={editText}
             onChange={(e) => setEditText(e.currentTarget.value)}
             onBlur={() => handleEditSave(todo.id)}
-            onKeyPress={(e) => e.key === 'Enter' && handleEditSave(todo.id)}
+            onKeyPress={(e) => e.key === "Enter" && handleEditSave(todo.id)}
             autoFocus
           />
         ) : (
-          <span style={{ 
-            textDecoration: todo.completed ? 'line-through' : 'none'
-          }}>
+          <span
+            style={{
+              textDecoration: todo.completed ? "line-through" : "none",
+            }}
+          >
             {todo.text}
           </span>
         )}
         <Group>
           <ActionIcon
-            onClick={() => editId === todo.id ? 
-              handleEditSave(todo.id) : 
-              handleEditStart(todo)
+            onClick={() =>
+              editId === todo.id
+                ? handleEditSave(todo.id)
+                : handleEditStart(todo)
             }
           >
             <IconEdit size={18} />
           </ActionIcon>
-          <ActionIcon
-            color="red"
-            onClick={() => dispatch(deleteTodo(todo.id))}
-          >
+          <ActionIcon color="red" onClick={() => dispatch(deleteTodo(todo.id))}>
             <IconTrash size={18} />
           </ActionIcon>
         </Group>
@@ -138,36 +142,40 @@ const TodoItem = ({ todo, index, moveItem }: {
 };
 
 const Lesson7 = () => {
-  const [input, setInput] = useState('');
-  const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
+  const [input, setInput] = useState("");
+  const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
   const todos = useSelector((state: RootState) => state.todos.todos);
   const dispatch = useDispatch();
 
   const filteredTodos = todos.filter((todo: Todo) => {
-    if (filter === 'active') return !todo.completed;
-    if (filter === 'completed') return todo.completed;
+    if (filter === "active") return !todo.completed;
+    if (filter === "completed") return todo.completed;
     return true;
   });
 
   const handleAddTodo = () => {
     if (!input.trim()) return;
-    dispatch(addTodo({
-      id: Date.now(),
-      text: input,
-      completed: false
-    }));
-    setInput('');
+    dispatch(
+      addTodo({
+        id: Date.now(),
+        text: input,
+        completed: false,
+      })
+    );
+    setInput("");
   };
 
   const handleFilterChange = (value: string) => {
-    setFilter(value as 'all' | 'active' | 'completed');
+    setFilter(value as "all" | "active" | "completed");
   };
 
   const moveItem = (dragIndex: number, hoverIndex: number) => {
-    dispatch(moveTodo({
-      oldIndex: dragIndex,
-      newIndex: hoverIndex
-    }));
+    dispatch(
+      moveTodo({
+        oldIndex: dragIndex,
+        newIndex: hoverIndex,
+      })
+    );
   };
 
   return (
@@ -188,9 +196,9 @@ const Lesson7 = () => {
             value={filter}
             onChange={handleFilterChange}
             data={[
-              { label: 'All', value: 'all' },
-              { label: 'Active', value: 'active' },
-              { label: 'Completed', value: 'completed' },
+              { label: "All", value: "all" },
+              { label: "Active", value: "active" },
+              { label: "Completed", value: "completed" },
             ]}
             fullWidth
           />

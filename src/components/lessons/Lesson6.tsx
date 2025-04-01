@@ -1,5 +1,5 @@
 import { TextInput, Select, MultiSelect } from "@mantine/core";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 interface FilterCondition {
   condition: string;
@@ -34,26 +34,35 @@ const Lesson6 = () => {
   // Load data from URL when component mounts
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-    const filterData = searchParams.get('filter');
-    
+    const filterData = searchParams.get("filter");
+
     if (filterData) {
       try {
-        const parsedData = JSON.parse(decodeURIComponent(filterData)) as FilterResult;
+        const parsedData = JSON.parse(
+          decodeURIComponent(filterData)
+        ) as FilterResult;
         setFilterResult(parsedData);
         setSearchText(parsedData.freeText);
         setSelectedTags(parsedData.tags);
-        
+
         // Reconstruct filter rows from conditions
         if (parsedData.filterWithConditions.length > 0) {
-          setFilterRows(Array.from({ length: parsedData.filterWithConditions.length }, (_, i) => i));
-          setFilterValues(parsedData.filterWithConditions.map(condition => ({
-            column: condition.field,
-            condition: condition.condition,
-            text: condition.value
-          })));
+          setFilterRows(
+            Array.from(
+              { length: parsedData.filterWithConditions.length },
+              (_, i) => i
+            )
+          );
+          setFilterValues(
+            parsedData.filterWithConditions.map((condition) => ({
+              column: condition.field,
+              condition: condition.condition,
+              text: condition.value,
+            }))
+          );
         }
       } catch (error) {
-        console.error('Error parsing URL data:', error);
+        console.error("Error parsing URL data:", error);
       }
     }
   }, []);
@@ -87,12 +96,12 @@ const Lesson6 = () => {
   ];
 
   const isOptions = [
-    { value: 'IS', label: 'IS' },
-    { value: 'IS_NOT', label: 'IS_NOT' },
-    { value: 'CONTAINS', label: 'CONTAINS' },
-    { value: 'NOT_CONTAINS', label: 'NOT_CONTAINS' },
-    { value: 'GREATER_THAN', label: 'GREATER_THAN' },
-    { value: 'LESS_THAN', label: 'LESS_THAN' }
+    { value: "IS", label: "IS" },
+    { value: "IS_NOT", label: "IS_NOT" },
+    { value: "CONTAINS", label: "CONTAINS" },
+    { value: "NOT_CONTAINS", label: "NOT_CONTAINS" },
+    { value: "GREATER_THAN", label: "GREATER_THAN" },
+    { value: "LESS_THAN", label: "LESS_THAN" },
   ];
 
   const handleAddFilter = () => {
@@ -110,7 +119,7 @@ const Lesson6 = () => {
     setFilterValues([{ column: null, condition: null, text: "" }]);
     setFilterResult(null);
     // Clear URL params
-    window.history.replaceState({}, '', window.location.pathname);
+    window.history.replaceState({}, "", window.location.pathname);
   };
 
   const handleFilterValueChange = (
@@ -144,15 +153,19 @@ const Lesson6 = () => {
       filterWithConditions: filterConditions,
       operatorsOrder: [],
       freeText: searchText,
-      tags: selectedTags
+      tags: selectedTags,
     };
 
     setFilterResult(result);
 
     // Update URL with filter data
     const searchParams = new URLSearchParams();
-    searchParams.set('filter', encodeURIComponent(JSON.stringify(result)));
-    window.history.replaceState({}, '', `${window.location.pathname}?${searchParams.toString()}`);
+    searchParams.set("filter", encodeURIComponent(JSON.stringify(result)));
+    window.history.replaceState(
+      {},
+      "",
+      `${window.location.pathname}?${searchParams.toString()}`
+    );
   };
 
   return (
@@ -241,8 +254,13 @@ const Lesson6 = () => {
                     placeholder="Text"
                     className="border w-[386px] focus:border-primary outline-none"
                     value={filterValues[index].text}
-                    onChange={(e) => handleFilterValueChange(index, "text", e.target.value)}
-                    disabled={!filterValues[index].column || !filterValues[index].condition}
+                    onChange={(e) =>
+                      handleFilterValueChange(index, "text", e.target.value)
+                    }
+                    disabled={
+                      !filterValues[index].column ||
+                      !filterValues[index].condition
+                    }
                   />
                 </div>
               </div>
@@ -275,7 +293,7 @@ const Lesson6 = () => {
         </div>
       </form>
 
-      <table className={`${filterResult ? 'w-full' : ''}`}>
+      <table className={`${filterResult ? "w-full" : ""}`}>
         <thead>
           <tr className="grid grid-cols-2">
             <th className="px-5 py-4 border border-[#e5e7eb]">Filter</th>
@@ -292,11 +310,12 @@ const Lesson6 = () => {
               ) : null}
             </td>
             <td className="px-5 py-4 font-medium border border-[#e5e7eb]">
-              {filterResult && filterResult.tags.map((tag, index) => (
-                <span key={index} className="mr-2">
-                  {tag}
-                </span>
-              ))}
+              {filterResult &&
+                filterResult.tags.map((tag, index) => (
+                  <span key={index} className="mr-2">
+                    {tag}
+                  </span>
+                ))}
             </td>
           </tr>
         </tbody>

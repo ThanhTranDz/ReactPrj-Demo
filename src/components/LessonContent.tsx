@@ -12,20 +12,19 @@ const lessons = {
   6: lazy(() => import("./lessons/Lesson6")),
   7: lazy(() => import("./lessons/Lesson7")),
   8: lazy(() => import("./lessons/Lesson8")),
-};
+} as const;
 
 export const LessonContent = () => {
   // const lesson, setLesson = useState("");
   const { lessonId } = useParams();
   console.log(lessonId);
   
-  const defaultLesson = "0"; // Đặt bài học mặc định ở đây
-  const lessonToShow = lessonId || defaultLesson;
- // Nếu chưa có lessonId, dùng bài học mặc định
-  const LessonComponent = lessons[lessonToShow];
+  const defaultLesson = 0;
+  const lessonToShow = lessonId ? parseInt(lessonId) : defaultLesson;
+  const LessonComponent = lessons[lessonToShow as keyof typeof lessons];
 
   if (!LessonComponent) {
-    // return <h1>Không tìm thấy bài học {lessonToShow}</h1>;
+    return <h1>Không tìm thấy bài học {lessonToShow}</h1>;
   }
 
   return (
