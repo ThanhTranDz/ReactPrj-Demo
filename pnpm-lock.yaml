@@ -84,6 +84,9 @@ importers:
       '@eslint/js':
         specifier: ^9.21.0
         version: 9.23.0
+      '@nabla/vite-plugin-eslint':
+        specifier: ^2.0.5
+        version: 2.0.5(eslint@9.23.0(jiti@2.4.2))(vite@6.2.3(jiti@2.4.2)(lightningcss@1.29.2))
       '@types/react':
         specifier: ^19.0.10
         version: 19.0.12
@@ -559,6 +562,12 @@ packages:
     resolution: {integrity: sha512-6o65Rbfl8jd1C1nF9icvungqL0qZViEOmrZgkyKXxBYkC3x91fz4zftwQgNjt1tZHWDNO6Bo4GpRjJyAdwl48g==}
     peerDependencies:
       react: ^18.x || ^19.x
+
+  '@nabla/vite-plugin-eslint@2.0.5':
+    resolution: {integrity: sha512-m6Q8ZVM0ASZfYyfFbG661mDklhZQZEeBMQgtB26NhdadxPSctHzHsUbF87msdSb0V4Z8R1p/vRkB5SHNOpANAQ==}
+    peerDependencies:
+      eslint: ^8.45 || ^9
+      vite: ^4 || ^5 || ^6
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -2611,6 +2620,16 @@ snapshots:
   '@mantine/hooks@7.17.3(react@19.1.0)':
     dependencies:
       react: 19.1.0
+
+  '@nabla/vite-plugin-eslint@2.0.5(eslint@9.23.0(jiti@2.4.2))(vite@6.2.3(jiti@2.4.2)(lightningcss@1.29.2))':
+    dependencies:
+      '@types/eslint': 8.56.12
+      chalk: 4.1.2
+      debug: 4.4.0
+      eslint: 9.23.0(jiti@2.4.2)
+      vite: 6.2.3(jiti@2.4.2)(lightningcss@1.29.2)
+    transitivePeerDependencies:
+      - supports-color
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
